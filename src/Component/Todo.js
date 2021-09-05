@@ -76,7 +76,7 @@ function Todo(props) {
           setRows(data.data);
         })
         .catch((error) => {
-            setErrorMessage("Something went wrong");
+          setErrorMessage("Something went wrong");
         });
     }
   }, [history]);
@@ -84,7 +84,14 @@ function Todo(props) {
   function handleFormValue(event) {
     setFormValue(event.target.value);
   }
-  function handleFormSubmit(e) {
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter") {
+        handleFormSubmit();
+    }
+  }
+
+  function handleFormSubmit() {
     const taskData = {
       name: formValue,
     };
@@ -110,7 +117,10 @@ function Todo(props) {
   const classes = useStyles();
   return (
     <div>
-      <Header val="Logout" secondButton={{'value' : 'User List' , 'path' : '/userlist'}}></Header>
+      <Header
+        val="Logout"
+        secondButton={{ value: "User List", path: "/userlist" }}
+      ></Header>
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       <br></br>
       <br></br>
@@ -121,6 +131,7 @@ function Todo(props) {
           variant="filled"
           value={formValue}
           onChange={handleFormValue}
+          onKeyDown={handleKeyDown}
         />
         <br></br>
         <Button
