@@ -238,7 +238,7 @@ export default function SignUp() {
 
               <TextField
                 id="date"
-                placeholder="Birthday"
+                label="Birthday"
                 type="date"
                 variant="outlined"
                 margin="normal"
