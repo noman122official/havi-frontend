@@ -128,7 +128,7 @@ export default function Login() {
                 required
                 fullWidth
                 id="email"
-                placeholder="e-Mail"
+                placeholder="E-Mail"
                 name="email"
                 autoComplete="email"
                 autoFocus
