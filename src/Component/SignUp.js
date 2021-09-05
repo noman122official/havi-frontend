@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,7 +14,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
+import { useHistory } from 'react-router-dom'
 import Box from "@material-ui/core/Box";
+import cookies from "js-cookie";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,16 +27,17 @@ import config from "../config";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+      <Typography variant="body2" color="textSecondary" align="center">
+          {'Copyright © '}
+          <Link color="inherit" href="https://github.com/noman122official">
+              Naman Das
+          </Link>{' '}
+          {new Date().getFullYear()}
+          {'.'}
+      </Typography>
   );
 }
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -71,10 +74,17 @@ export default function SignUp() {
   const [password2, setPassword2] = useState("");
   const [dob, setDob] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const history = useHistory();
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [gender, setGender] = useState("none");
-
+  useMemo(() => {
+    if (cookies.get("token")) {
+      history.push({
+        pathname: "/listform",
+      });
+    }
+  }, []);
   const paperStyle = {
     padding: 30,
     margin: "10vh auto",
@@ -122,13 +132,13 @@ export default function SignUp() {
         .post(`${config.baseUrl}/register`, userData)
         .then(function (data) {
           setSuccessMessage("Registration successful");
-          setFullName('');
-          setDob('');
-          setPhoneNumber('');
-          setEmail('');
-          setPassword('');          
-          setPassword2('');
-          setGender('none');
+          setFullName("");
+          setDob("");
+          setPhoneNumber("");
+          setEmail("");
+          setPassword("");
+          setPassword2("");
+          setGender("none");
         })
         .catch(function (error) {
           console.log(error.response);
